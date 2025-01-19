@@ -7,7 +7,7 @@ const MoviesGrid = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.targer.value);
+    setSearchTerm(event.target.value);
   };
 
   const filteredMovies = movies.filter((movie) =>

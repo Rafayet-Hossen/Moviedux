@@ -13,7 +13,7 @@ const MoviesGrid = () => {
         <div className='movies-grid'>
             {
                 movies.map((movie) => (
-                    <MovieCard movie={movie}/>
+                    <MovieCard movie={movie} key={movie.id}/>
                 ))
             }
         </div>

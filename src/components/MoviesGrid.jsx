@@ -16,24 +16,45 @@ const MoviesGrid = () => {
 
   const handleGenreChange = (event) => {
     setGenre(event.target.value);
-  }
+  };
 
   const handleRatingChange = (event) => {
     setRating(event.target.value);
-  }
+  };
 
-  const matchesGenre = (movie,genre) => {
-    return genre === "All Genres" || movie.genre.toLowerCase() === genre.toLowerCase();
-  }
+  const matchesGenre = (movie, genre) => {
+    return (
+      genre === "All Genres" ||
+      movie.genre.toLowerCase() === genre.toLowerCase()
+    );
+  };
 
-  const matchesSearchTerm = (movie,searchTerm) => {
+  const matchesRating = (movie, rating) => {
+    switch (rating) {
+      case "All":
+        return true;
+      case "Good":
+        return movie.rating >= 8;
+      case "Ok":
+        return movie.rating >= 5 && movie.rating < 8;
+      case "Bad":
+        return movie.rating < 5;
+      default:
+        return false;
+    }
+  };
+
+
+  const matchesSearchTerm = (movie, searchTerm) => {
     return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
-  }
-  const filteredMovies = movies.filter((movie) =>
-    matchesGenre(movie,genre) && matchesSearchTerm(movie,searchTerm)
+  };
+  const filteredMovies = movies.filter(
+    (movie) =>
+      matchesGenre(movie, genre) &&
+      matchesRating(movie, rating) &&
+      matchesSearchTerm(movie, searchTerm)
   );
-  
- 
+
   useEffect(() => {
     fetch("movies.json")
       .then((response) => response.json())
@@ -77,10 +98,10 @@ const MoviesGrid = () => {
             value={rating}
             onChange={handleRatingChange}
           >
-            <option value="">All</option>
-            <option value="">Good</option>
-            <option value="">Ok</option>
-            <option value="">Bad</option>
+            <option>All</option>
+            <option>Good</option>
+            <option>Ok</option>
+            <option>Bad</option>
           </select>
         </div>
       </div>
